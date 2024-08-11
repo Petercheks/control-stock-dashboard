@@ -5,7 +5,7 @@ import emitter from "@/emitter.js";
 import ModalFormCategory from "@/components/categories/modals/ModalFormCategory.vue";
 import Api from "@/api.js";
 import Toast from "@/toast.js";
-import Swal from 'sweetalert2';
+import Swal from '@/swal.js';
 
 const props = defineProps({
   category: {
@@ -39,12 +39,8 @@ const deleteCategory = async () => {
     title: '¿Estás seguro?',
     text: 'Esta acción no se puede deshacer.',
     icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#48C78E',
-    cancelButtonColor: '#FF6685',
     confirmButtonText: 'Eliminar',
     cancelButtonText: 'Cancelar',
-    reverseButtons: true,
   }).then(async (result) => {
     if (result.isConfirmed) {
       try {
