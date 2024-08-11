@@ -1,7 +1,11 @@
 <script setup>
-
 import { faPenAlt, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import emitter from "@/emitter.js";
+import ModalFormCategory from "@/components/categories/modals/ModalFormCategory.vue";
+import Api from "@/api.js";
+import Toast from "@/toast.js";
+import Swal from 'sweetalert2';
 
 const props = defineProps({
   category: {
@@ -21,17 +25,51 @@ const createdAt = () => {
 }
 
 const editCategory = () => {
-  console.log('editar categoria')
+  emitter.emit('open-modal', {
+    name: ModalFormCategory,
+    props: {
+      category: props.category,
+    },
+  })
 }
 
-const deleteCategory = () => {
-  console.log('borrar categoria')
+const deleteCategory = async () => {
+
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: 'Esta acción no se puede deshacer.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#48C78E',
+    cancelButtonColor: '#FF6685',
+    confirmButtonText: 'Eliminar',
+    cancelButtonText: 'Cancelar',
+    reverseButtons: true,
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await Api.delete(`/categories/${props.category.id}`)
+
+        await Toast.fire({
+          icon: 'success',
+          title: 'Categoria eliminada.',
+        })
+
+        emitter.emit('refresh-categories')
+      } catch (error) {
+        await Toast.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.response.data.detail
+        })
+      }
+    }
+  })
 }
 </script>
 
 <template>
   <tr>
-    <td class="is-narrow">{{ category.id }}</td>
     <td>{{ category.name }}</td>
     <td>567</td>
     <td>{{ createdAt() }}</td>

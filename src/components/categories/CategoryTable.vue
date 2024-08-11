@@ -4,6 +4,8 @@ import Api from '@/api.js'
 import CategoryRow from '@/components/categories/CategoryRow.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import emitter from "@/emitter.js";
+import ModalFormCategory from "@/components/categories/modals/ModalFormCategory.vue";
 
 const categories = ref([]);
 const isLoading = ref(false);
@@ -17,23 +19,33 @@ const getCategories = async () => {
   }
 }
 
+const openModalCategory = () => {
+  emitter.emit('open-modal', {
+    name: ModalFormCategory,
+    props: {},
+  })
+}
+
 onMounted(async () => {
   isLoading.value = true
 
   await getCategories()
 
   isLoading.value = false
+
+  emitter.on('refresh-categories', () => {
+    getCategories()
+  })
 })
 </script>
 
 <template>
-  <button class="button is-success mb-5 mt-2">
+  <button class="button is-success mb-5 mt-2" @click="openModalCategory">
     Agregar Categoria
   </button>
   <table class="table is-striped is-fullwidth is-hoverable">
     <thead>
     <tr>
-      <th scope="col">Cod.</th>
       <th scope="col">Nombre</th>
       <th scope="col">Productos Vinculados</th>
       <th scope="col">Creado el</th>
