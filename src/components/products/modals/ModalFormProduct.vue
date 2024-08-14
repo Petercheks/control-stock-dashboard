@@ -69,10 +69,11 @@ const editProduct = async () => {
 
     emitter.emit('refresh-products')
     emitter.emit('refresh-categories')
+    emitter.emit('refresh-indicators')
     closeModal()
   } catch (error) {
     await Toast.fire({
-      icon: 'Error',
+      icon: 'error',
       title: 'Error al actualizar el producto'
     })
   }
@@ -89,10 +90,11 @@ const createProduct = async () => {
 
     emitter.emit('refresh-products')
     emitter.emit('refresh-categories')
+    emitter.emit('refresh-indicators')
     closeModal()
   } catch (error) {
     await Toast.fire({
-      icon: 'Error',
+      icon: 'error',
       title: 'Error al crear el producto'
     })
   }
@@ -104,7 +106,7 @@ const getCategories = async () => {
     categories.value = data
   } catch (error) {
     await Toast.fire({
-      icon: 'Error',
+      icon: 'error',
       title: 'Error al obtener las categorias'
     })
   }
@@ -158,7 +160,7 @@ onBeforeUnmount(() => {
               <label class="label">Codigo: </label>
               <div class="control">
                 <input
-                    class="input is-uppercase"
+                    class="input"
                     type="text"
                     placeholder="..."
                     v-model="form.code"

@@ -67,7 +67,7 @@ const deleteCategory = async () => {
 <template>
   <tr>
     <td>{{ category.name }}</td>
-    <td>{{ category.linked_products_count}}</td>
+    <td>{{ category.linked_products_count ?? 0 }}</td>
     <td>{{ createdAt() }}</td>
     <td>
       <div class="buttons is-flex is-justify-content-center">

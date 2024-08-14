@@ -26,7 +26,7 @@ const getProducts = async () => {
     products.value = data
   } catch (error) {
     await Toast.fire({
-      icon: 'Error',
+      icon: 'error',
       title: 'Error al obtener los productos'
     })
   }

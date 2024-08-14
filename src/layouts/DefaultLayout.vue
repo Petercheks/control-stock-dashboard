@@ -4,7 +4,7 @@ import SidebarArea from '../components/sidebar/SidebarArea.vue'
 
 <template>
   <main>
-    <section class="columns p-1">
+    <section class="columns">
       <div class="column is-one-fifth">
         <SidebarArea />
       </div>
